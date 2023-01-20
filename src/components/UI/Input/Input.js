@@ -1,9 +1,18 @@
-import { useEffect, useRef } from "react";
+import React, { useImperativeHandle, useRef } from "react";
 import classes from "./Input.module.css";
-const Input = (props) => {
+const Input = React.forwardRef((props, ref) => {
   const inputRef = useRef();
-  useEffect(() => {
+
+  //It will be called from outside of this component
+  const activate = () => {
     inputRef.current.focus();
+  };
+
+  useImperativeHandle(ref, () => {
+    // return elements that we want to be accessible for other components
+    return {
+      focus: activate,
+    };
   });
 
   return (
@@ -23,5 +32,5 @@ const Input = (props) => {
       />
     </div>
   );
-};
+});
 export default Input;

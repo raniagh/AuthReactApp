@@ -64,8 +64,8 @@ const Login = (props) => {
   const { isValid: emailIsValid } = emailState;
   const { isValid: passwordIsValid } = passwordState;
 
-  const emailInputRef = useRef;
-  const passwordInputRef = useRef;
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
   useEffect(() => {
     //waiting for 500ms until verify the entered email & pass
     const timer = setTimeout(() => {
@@ -107,7 +107,9 @@ const Login = (props) => {
   const submitHandler = (event) => {
     event.preventDefault();
     if (formIsValid) authCtx.onLogin(emailState.value, passwordState.value);
+    else if (!emailIsValid) emailInputRef.current.focus();
     else {
+      passwordInputRef.current.focus();
     }
   };
 
